@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420" fill="none">
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+    </filter>
+  </defs>
+  <rect x="24" y="32" width="512" height="356" rx="20" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="48" y="72" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="15" font-weight="600">Featured properties</text>
+  <rect x="48" y="92" width="100" height="72" rx="10" fill="#38bdf8" fill-opacity="0.35"/>
+  <rect x="160" y="92" width="100" height="72" rx="10" fill="#94a3b8" fill-opacity="0.35"/>
+  <rect x="272" y="92" width="100" height="72" rx="10" fill="#34d399" fill-opacity="0.3"/>
+  <rect x="384" y="92" width="100" height="72" rx="10" fill="#fbbf24" fill-opacity="0.28"/>
+  <text x="48" y="200" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14" font-weight="600">Sales growth</text>
+  <rect x="48" y="216" width="32" height="88" rx="6" fill="#38bdf8" fill-opacity="0.55"/>
+  <rect x="96" y="196" width="32" height="108" rx="6" fill="#38bdf8" fill-opacity="0.75"/>
+  <rect x="144" y="176" width="32" height="128" rx="6" fill="#22d3ee" fill-opacity="0.85"/>
+  <rect x="192" y="206" width="32" height="98" rx="6" fill="#38bdf8" fill-opacity="0.6"/>
+  <rect x="240" y="186" width="32" height="118" rx="6" fill="#38bdf8" fill-opacity="0.7"/>
+  <polyline points="48,320 120,292 200,300 280,268 360,278 440,248" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9"/>
+  <line x1="48" y1="320" x2="440" y2="320" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="48" y="352" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14" font-weight="600">Client satisfaction</text>
+  <path d="M48 372h24l8 24 8-24h24l-20 14 8 24-20-16-20 16 8-24z" fill="#fbbf24"/>
+  <path d="M120 372h24l8 24 8-24h24l-20 14 8 24-20-16-20 16 8-24z" fill="#fbbf24"/>
+  <path d="M192 372h24l8 24 8-24h24l-20 14 8 24-20-16-20 16 8-24z" fill="#fbbf24"/>
+  <path d="M264 372h24l8 24 8-24h24l-20 14 8 24-20-16-20 16 8-24z" fill="#fbbf24"/>
+  <path d="M336 372h24l8 24 8-24h24l-20 14 8 24-20-16-20 16 8-24z" fill="#cbd5e1"/>
+  <text x="420" y="388" fill="#f1f5f9" font-family="system-ui, sans-serif" font-size="15" font-weight="600">4.9</text>
+  <text x="48" y="408" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Based on 120+ verified reviews</text>
+</svg>
