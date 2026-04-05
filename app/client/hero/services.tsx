@@ -1,10 +1,6 @@
-'use client';
-
+"use client";
 import Link from 'next/link';
 
-/* ─────────────────────────────────────────────
-   GLOBAL STYLES
-───────────────────────────────────────────── */
 const G = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
@@ -111,9 +107,6 @@ const G = `
   }
 `;
 
-/* ─────────────────────────────────────────────
-   TYPES
-───────────────────────────────────────────── */
 type BadgeVariant = 'exclusive' | 'available' | 'offplan';
 
 interface Metric {
@@ -137,12 +130,10 @@ interface Property {
   delay: number;
 }
 
-/* ─────────────────────────────────────────────
-   DATA
-───────────────────────────────────────────── */
 const PROPERTIES: Property[] = [
   {
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=85',
+    image:
+      'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=85',
     alt: 'Palm Jumeirah luxury villa',
     badge: 'Exclusive',
     badgeVariant: 'exclusive',
@@ -153,14 +144,20 @@ const PROPERTIES: Property[] = [
     description:
       'A palatial waterfront estate with 6 bedrooms, private beach, and infinity pool. Trophy asset delivering exceptional rental demand and above-market yields year-round.',
     metrics: [
-      { label: 'Annual ROI', value: '9.2%', sub: '↑ above avg', color: 'green' },
-      { label: 'Cap Rate',   value: '6.8%', sub: 'Net yield',   color: 'gold'  },
-      { label: 'Apprec.',   value: '+24%', sub: 'Since 2023',  color: 'blue'  },
+      {
+        label: 'Annual ROI',
+        value: '9.2%',
+        sub: '↑ above avg',
+        color: 'green',
+      },
+      { label: 'Cap Rate', value: '6.8%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+24%', sub: 'Since 2023', color: 'blue' },
     ],
     delay: 0,
   },
   {
-    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=85',
+    image:
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=85',
     alt: 'Downtown Dubai penthouse view',
     badge: 'Available',
     badgeVariant: 'available',
@@ -171,14 +168,20 @@ const PROPERTIES: Property[] = [
     description:
       'Sky-high duplex penthouse with floor-to-ceiling glass and direct Burj Khalifa views. Fully furnished with concierge services and premium short-term rental income potential.',
     metrics: [
-      { label: 'Annual ROI', value: '10.4%', sub: '↑ above avg', color: 'green' },
-      { label: 'Cap Rate',   value: '8.1%',  sub: 'Net yield',   color: 'gold'  },
-      { label: 'Apprec.',   value: '+31%',  sub: 'Since 2023',  color: 'blue'  },
+      {
+        label: 'Annual ROI',
+        value: '10.4%',
+        sub: '↑ above avg',
+        color: 'green',
+      },
+      { label: 'Cap Rate', value: '8.1%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+31%', sub: 'Since 2023', color: 'blue' },
     ],
     delay: 110,
   },
   {
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=85',
+    image:
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=85',
     alt: 'Dubai Marina apartment skyline',
     badge: 'Off-Plan',
     badgeVariant: 'offplan',
@@ -189,9 +192,14 @@ const PROPERTIES: Property[] = [
     description:
       'Sleek 3-bedroom Emaar-developed apartment with panoramic marina and sea views. World-class amenities and consistently high occupancy from expat professionals and tourists.',
     metrics: [
-      { label: 'Annual ROI', value: '8.4%', sub: '↑ above avg', color: 'green' },
-      { label: 'Cap Rate',   value: '6.2%', sub: 'Net yield',   color: 'gold'  },
-      { label: 'Apprec.',   value: '+19%', sub: 'Since 2023',  color: 'blue'  },
+      {
+        label: 'Annual ROI',
+        value: '8.4%',
+        sub: '↑ above avg',
+        color: 'green',
+      },
+      { label: 'Cap Rate', value: '6.2%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+19%', sub: 'Since 2023', color: 'blue' },
     ],
     delay: 220,
   },
@@ -232,12 +240,13 @@ const TRUST_ITEMS = [
   },
 ];
 
-/* ─────────────────────────────────────────────
-   SUB-COMPONENTS
-───────────────────────────────────────────── */
-
-/** Status badge on the card image */
-function StatusBadge({ label, variant }: { label: string; variant: BadgeVariant }) {
+function StatusBadge({
+  label,
+  variant,
+}: {
+  label: string;
+  variant: BadgeVariant;
+}) {
   const styles: Record<BadgeVariant, React.CSSProperties> = {
     exclusive: {
       background: 'rgba(212,175,55,0.18)',
@@ -277,7 +286,6 @@ function StatusBadge({ label, variant }: { label: string; variant: BadgeVariant 
   );
 }
 
-/** ROI pill overlaid bottom-left on the image */
 function RoiPill({ roi }: { roi: string }) {
   return (
     <div
@@ -311,12 +319,11 @@ function RoiPill({ roi }: { roi: string }) {
   );
 }
 
-/** Single metric cell */
 function MetricCell({ metric, first }: { metric: Metric; first?: boolean }) {
   const colorMap: Record<Metric['color'], string> = {
     green: '#34D399',
-    gold:  '#D4AF37',
-    blue:  '#60A5FA',
+    gold: '#D4AF37',
+    blue: '#60A5FA',
   };
 
   return (
@@ -363,34 +370,38 @@ function MetricCell({ metric, first }: { metric: Metric; first?: boolean }) {
   );
 }
 
-/** Full property card */
 function PropertyCard({ property }: { property: Property }) {
-  const { image, alt, badge, badgeVariant, roi, name, location, price, description, metrics, delay } = property;
+  const {
+    image,
+    alt,
+    badge,
+    badgeVariant,
+    roi,
+    name,
+    location,
+    price,
+    description,
+    metrics,
+    delay,
+  } = property;
 
   return (
-    <div
-      className="prop-card"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {/* ── Image ── */}
+    <div className="prop-card" style={{ animationDelay: `${delay}ms` }}>
       <div style={{ position: 'relative', height: 210, overflow: 'hidden' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="card-img-inner" src={image} alt={alt} />
-        {/* gradient overlay */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(to bottom, transparent 42%, rgba(13,17,24,0.88) 100%)',
+            background:
+              'linear-gradient(to bottom, transparent 42%, rgba(13,17,24,0.88) 100%)',
           }}
         />
         <StatusBadge label={badge} variant={badgeVariant} />
         <RoiPill roi={roi} />
       </div>
 
-      {/* ── Body ── */}
       <div style={{ padding: '22px 22px 20px' }}>
-        {/* name + price */}
         <div
           style={{
             display: 'flex',
@@ -439,7 +450,6 @@ function PropertyCard({ property }: { property: Property }) {
           </div>
         </div>
 
-        {/* location */}
         <div
           className="f-sans"
           style={{
@@ -463,7 +473,6 @@ function PropertyCard({ property }: { property: Property }) {
           {location}
         </div>
 
-        {/* description */}
         <p
           className="f-sans"
           style={{
@@ -477,7 +486,6 @@ function PropertyCard({ property }: { property: Property }) {
           {description}
         </p>
 
-        {/* ── Metrics strip ── */}
         <div
           style={{
             display: 'flex',
@@ -498,18 +506,18 @@ function PropertyCard({ property }: { property: Property }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   MAIN EXPORT
-───────────────────────────────────────────── */
 export default function Properties() {
   return (
     <>
       <style>{G}</style>
 
       <section
-        style={{ background: '#0C0C0F', position: 'relative', overflow: 'hidden' }}
+        style={{
+          background: '#0C0C0F',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
       >
-        {/* ── Ambient orbs ── */}
         <div
           className="absolute pointer-events-none rounded-full"
           style={{
@@ -544,7 +552,6 @@ export default function Properties() {
           }}
         />
 
-        {/* ── Subtle grid overlay ── */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -554,14 +561,9 @@ export default function Properties() {
           }}
         />
 
-        {/* ── Content ── */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-20 lg:py-28">
-
-          {/* ── Section Header ── */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
-            {/* Left: headline */}
             <div>
-              {/* Eyebrow pill */}
               <div
                 className="inline-flex items-center gap-2 mb-5"
                 style={{
@@ -624,13 +626,12 @@ export default function Properties() {
                   marginBottom: 0,
                 }}
               >
-                Hand-picked residences across Dubai's most coveted addresses — each
-                selected for maximum capital appreciation and above-market rental yield
-                potential.
+                Hand-picked residences across Dubai's most coveted addresses —
+                each selected for maximum capital appreciation and above-market
+                rental yield potential.
               </p>
             </div>
 
-            {/* Right: CTA */}
             <div className="flex items-center gap-3 shrink-0">
               <Link href="/properties" className="btn-gold">
                 View All Properties
@@ -647,14 +648,12 @@ export default function Properties() {
             </div>
           </div>
 
-          {/* ── Property Grid — 3 columns ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
             {PROPERTIES.map((property) => (
               <PropertyCard key={property.name} property={property} />
             ))}
           </div>
 
-          {/* ── Bottom CTA Row ── */}
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
             style={{ marginBottom: 56 }}
@@ -676,7 +675,6 @@ export default function Properties() {
             </Link>
           </div>
 
-          {/* ── Trust Bar ── */}
           <div
             style={{
               background: 'rgba(255,255,255,0.02)',
@@ -686,7 +684,6 @@ export default function Properties() {
             }}
             className="flex flex-col sm:flex-row items-center justify-between gap-6"
           >
-            {/* Trust items */}
             <div className="flex flex-wrap items-center gap-6 justify-center sm:justify-start">
               {TRUST_ITEMS.map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5">
@@ -705,7 +702,6 @@ export default function Properties() {
               ))}
             </div>
 
-            {/* Live badge */}
             <div className="flex items-center gap-2 shrink-0">
               <div
                 style={{
