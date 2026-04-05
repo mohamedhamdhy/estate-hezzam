@@ -518,48 +518,10 @@ export default function Properties() {
           overflow: 'hidden',
         }}
       >
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 640,
-            height: 640,
-            top: -100,
-            right: -140,
-            background:
-              'radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 65%)',
-          }}
-        />
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 520,
-            height: 520,
-            bottom: -80,
-            left: -110,
-            background:
-              'radial-gradient(circle, rgba(26,110,142,0.10) 0%, transparent 65%)',
-          }}
-        />
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 280,
-            height: 280,
-            top: '45%',
-            left: '42%',
-            background:
-              'radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 65%)',
-          }}
-        />
-
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px)',
-            backgroundSize: '72px 72px',
-          }}
-        />
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 640, height: 640, top: 100, left: -50, background: "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 65%)" }} />
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 520, height: 520, bottom: 100, right: -50, background: "radial-gradient(circle, rgba(26,110,142,0.10) 0%, transparent 65%)" }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-20 lg:py-28">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">

@@ -87,42 +87,10 @@ export default function Landing() {
         style={{ background: '#0C0C0F' }}
         className="relative flex flex-col min-h-screen lg:h-screen overflow-x-hidden lg:overflow-hidden"
       >
-        <div
-          className="absolute pointer-events-none rounded-full -top-32 -left-32"
-          style={{
-            width: 560,
-            height: 560,
-            background:
-              'radial-gradient(circle, rgba(212,175,55,0.11) 0%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute pointer-events-none rounded-full -bottom-40 -right-20"
-          style={{
-            width: 620,
-            height: 620,
-            background:
-              'radial-gradient(circle, rgba(26,110,142,0.13) 0%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute pointer-events-none rounded-full top-24 right-40"
-          style={{
-            width: 280,
-            height: 280,
-            background:
-              'radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%)',
-          }}
-        />
-        <div
-          className="absolute pointer-events-none rounded-full top-1/2 -left-20"
-          style={{
-            width: 340,
-            height: 340,
-            background:
-              'radial-gradient(circle, rgba(251,146,60,0.06) 0%, transparent 70%)',
-          }}
-        />
+         <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 640, height: 640, top: 100, left: -50, background: "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 65%)" }} />
+        <div className="absolute pointer-events-none rounded-full"
+          style={{ width: 520, height: 520, bottom: 100, right: -50, background: "radial-gradient(circle, rgba(26,110,142,0.10) 0%, transparent 65%)" }} />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-center flex-1 lg:h-full gap-8 lg:gap-10 xl:gap-14 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-10 pt-14 sm:pt-16 lg:pt-0 pb-10 lg:pb-0 lg:py-6">
           <div className="flex-1 min-w-0 flex flex-col items-start">
@@ -353,47 +321,6 @@ export default function Landing() {
               >
                 Book Consultation <span style={{ fontSize: 13 }}>↗</span>
               </Link>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {[
-                { n: '50+', l: 'Deals Closed' },
-                { n: 'AED 750M', l: 'Total Volume' },
-                { n: '98%', l: 'Satisfaction' },
-              ].map(({ n, l }, i) => (
-                <div
-                  key={l}
-                  className={`flex flex-col gap-0.5 ${i > 0 ? 'pl-4 ml-4' : ''}`}
-                  style={
-                    i > 0
-                      ? { borderLeft: '1px solid rgba(255,255,255,0.08)' }
-                      : {}
-                  }
-                >
-                  <span
-                    className="f-display"
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 700,
-                      color: '#fff',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {n}
-                  </span>
-                  <span
-                    className="f-sans"
-                    style={{
-                      fontSize: 8,
-                      color: 'rgba(255,255,255,0.30)',
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {l}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
 
