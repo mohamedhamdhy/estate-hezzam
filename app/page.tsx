@@ -1,16 +1,15 @@
-import React from 'react'
-import HeroContact from './hero/hero'
-import Results from './results/page'
-import Properties from './services/page'
+import Landing from './client/hero/landing';
+import Results from './client/hero/results';
+import Services from './client/hero/services';
 
 const page = () => {
   return (
     <div>
-      <HeroContact />
+      <Landing />
       <Results />
-      <Properties />
+      <Services />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

@@ -54,7 +54,6 @@ const G = `
   }
 `;
 
-/* ── Tiny sparkline SVG ── */
 function Sparkline({ up }: { up: boolean }) {
   const pts = up
     ? '0,28 10,22 20,24 30,15 40,18 50,8 60,11 70,4'
@@ -69,7 +68,6 @@ function Sparkline({ up }: { up: boolean }) {
         strokeLinejoin="round"
         opacity={0.85}
       />
-      {/* end dot */}
       <circle
         cx={up ? 70 : 70}
         cy={up ? 4 : 26}
@@ -80,7 +78,6 @@ function Sparkline({ up }: { up: boolean }) {
   );
 }
 
-/* ── Property mini-card used in the mockup grid ── */
 function PropCard({
   emoji,
   name,
@@ -100,7 +97,6 @@ function PropCard({
 }) {
   return (
     <div className="prop-card">
-      {/* image placeholder */}
       <div
         className="relative flex items-end"
         style={{
@@ -121,7 +117,6 @@ function PropCard({
         >
           {emoji}
         </div>
-        {/* badge */}
         <div
           className="f-sans absolute top-2 right-2"
           style={{
@@ -140,7 +135,6 @@ function PropCard({
         >
           {badge}
         </div>
-        {/* roi pill bottom-left */}
         <div
           className="f-sans absolute bottom-2 left-2"
           style={{
@@ -155,7 +149,6 @@ function PropCard({
           {roi}
         </div>
       </div>
-      {/* info */}
       <div style={{ padding: '10px 12px' }}>
         <p
           className="f-display"
@@ -197,7 +190,6 @@ function PropCard({
   );
 }
 
-/* ── Metric stat card ── */
 function StatCard({
   value,
   label,
@@ -279,7 +271,6 @@ function StatCard({
   );
 }
 
-/* ── Timeline achievement row ── */
 function TimelineItem({
   year,
   title,
@@ -351,7 +342,6 @@ function TimelineItem({
   );
 }
 
-/* ── Ticker item ── */
 function TickItem({
   label,
   val,
@@ -379,7 +369,6 @@ function TickItem({
   );
 }
 
-/* ── Bar chart ── */
 function BarChart() {
   const data = [
     { m: '2019', v: 38 },
@@ -500,7 +489,6 @@ export default function Results() {
         style={{ background: '#0C0C0F' }}
         className="relative overflow-hidden"
       >
-        {/* ── Orbs (same language as hero) ── */}
         <div
           className="absolute pointer-events-none rounded-full"
           style={{
@@ -535,7 +523,6 @@ export default function Results() {
           }}
         />
 
-        {/* ── Subtle grid ── */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -545,7 +532,6 @@ export default function Results() {
           }}
         />
 
-        {/* ── Live ticker strip ── */}
         <div
           style={{
             borderBottom: '1px solid rgba(255,255,255,0.05)',
@@ -563,10 +549,8 @@ export default function Results() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-20 lg:py-24">
-          {/* ── Section header ── */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
             <div>
-              {/* eyebrow */}
               <div
                 className="inline-flex items-center gap-2 mb-4"
                 style={{
@@ -668,11 +652,8 @@ export default function Results() {
             </div>
           </div>
 
-          {/* ── MAIN GRID ── */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6 mb-6">
-            {/* ── LEFT: stat cards + timeline ── */}
             <div className="flex flex-col gap-4">
-              {/* Stat cards 2-col */}
               <div className="grid grid-cols-2 gap-3">
                 <StatCard
                   value="750M+"
@@ -704,7 +685,6 @@ export default function Results() {
                 />
               </div>
 
-              {/* Growth chart card */}
               <div className="res-card p-5">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -749,7 +729,6 @@ export default function Results() {
                 <BarChart />
               </div>
 
-              {/* Timeline */}
               <div className="res-card p-5">
                 <p
                   className="f-sans"
@@ -787,9 +766,7 @@ export default function Results() {
               </div>
             </div>
 
-            {/* ── RIGHT: mockup browser + property grid ── */}
             <div className="flex flex-col gap-4">
-              {/* Browser mockup — analytics dashboard */}
               <div
                 style={{
                   background: '#0D1118',
@@ -800,7 +777,6 @@ export default function Results() {
                     '0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.07)',
                 }}
               >
-                {/* Browser bar */}
                 <div
                   style={{
                     background: '#0A0E1A',
@@ -884,7 +860,6 @@ export default function Results() {
                   </div>
                 </div>
 
-                {/* Dashboard body */}
                 <div
                   style={{
                     padding: 16,
@@ -893,7 +868,6 @@ export default function Results() {
                     gap: 12,
                   }}
                 >
-                  {/* Top row mini stats */}
                   <div className="grid grid-cols-4 gap-2">
                     {[
                       { l: 'Active Listings', v: '14', c: '#D4AF37' },
@@ -937,7 +911,6 @@ export default function Results() {
                     ))}
                   </div>
 
-                  {/* Map-style heatmap placeholder */}
                   <div
                     style={{
                       background: 'rgba(255,255,255,0.02)',
@@ -969,7 +942,6 @@ export default function Results() {
                       </span>
                     </div>
 
-                    {/* Grid aligned to 4 key areas */}
                     <div
                       style={{
                         display: 'grid',
@@ -977,22 +949,7 @@ export default function Results() {
                         gap: 3,
                       }}
                     >
-                      {[
-                        // Palm Jumeirah (high)
-                        0.7, 0.8, 0.9, 0.8,
-                        // Downtown (high)
-                        0.8, 0.9, 1, 0.9,
-                        // Marina (medium-high)
-
-                        // Palm continuation
-                        0.6, 0.7, 0.8, 0.7,
-                        // Downtown continuation
-                        0.9, 1, 0.9, 0.8,
-                        // Marina continuation
-
-                        // JBR (medium)
-                        0.4, 0.5, 0.6, 0.5, 0.5, 0.6, 0.5, 0.4,
-                      ].map((o, i) => (
+                      {[0.4, 0.5, 0.6, 0.5, 0.5, 0.6, 0.5, 0.4].map((o, i) => (
                         <div
                           key={i}
                           style={{
@@ -1009,7 +966,6 @@ export default function Results() {
                       ))}
                     </div>
 
-                    {/* Only relevant areas */}
                     <div
                       className="flex items-center justify-between"
                       style={{ marginTop: 6 }}
@@ -1034,7 +990,6 @@ export default function Results() {
                     </div>
                   </div>
 
-                  {/* Recent transactions table */}
                   <div
                     style={{
                       background: 'rgba(255,255,255,0.02)',
@@ -1168,7 +1123,6 @@ export default function Results() {
                 </div>
               </div>
 
-              {/* Property cards grid */}
               <div className="grid grid-cols-2 gap-3">
                 {properties.map((p) => (
                   <PropCard key={p.name} {...p} />
@@ -1177,7 +1131,6 @@ export default function Results() {
             </div>
           </div>
 
-          {/* ── Bottom trust bar ── */}
           <div
             style={{
               background: 'rgba(255,255,255,0.02)',
