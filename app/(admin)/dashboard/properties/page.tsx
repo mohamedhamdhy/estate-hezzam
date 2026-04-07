@@ -649,7 +649,7 @@ export default function PropertiesPage() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
-        router.replace('/admin/auth/login');
+        router.replace('/auth/login');
       } else {
         setAuthChecked(true);
       }
@@ -657,7 +657,7 @@ export default function PropertiesPage() {
 
     // Also watch for session expiry mid-session
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) router.replace('/admin/auth/login');
+      if (!session) router.replace('/auth/login');
     });
 
     return () => subscription.unsubscribe();

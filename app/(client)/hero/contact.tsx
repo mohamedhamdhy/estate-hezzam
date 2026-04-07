@@ -79,7 +79,7 @@ const ITEMS: ContactItem[] = [
     href: "tel:+971556027424",
     label: "Phone",
     handle: "+971556027424",
-    sub: "Call directly, available 9am–7pm GST",
+    sub: "Call directly, available 9am–10pm GST +4.00",
     accent: "#34D399",
     border: "rgba(52,211,153,0.28)",
     bg: "rgba(52,211,153,0.04)",
@@ -107,9 +107,9 @@ const ITEMS: ContactItem[] = [
     ),
   },
   {
-    href: "mailto:hesham.realestate@gmail.com",
+    href: "mailto:heshamestate@gmail.com",
     label: "Email",
-    handle: "hesham.realestate@gmail.com",
+    handle: "heshamestate@gmail.com",
     sub: "Send an email — replied within 24 hours",
     accent: "#D4AF37",
     border: "rgba(212,175,55,0.28)",
@@ -123,7 +123,7 @@ const ITEMS: ContactItem[] = [
     ),
   },
   {
-    href: "https://instagram.com/Hesham",
+    href: "https://www.instagram.com/askar__hesham/",
     label: "Instagram",
     handle: "@Hesham",
     sub: "Follow for listings, market updates & more",
@@ -140,7 +140,7 @@ const ITEMS: ContactItem[] = [
     ),
   },
   {
-    href: "https://linkedin.com/in/Hesham",
+    href: "https://www.linkedin.com/in/heshamaskar/",
     label: "LinkedIn",
     handle: "Hesham",
     sub: "Connect professionally on LinkedIn",
@@ -157,7 +157,7 @@ const ITEMS: ContactItem[] = [
     ),
   },
   {
-    href: "https://facebook.com/Hesham",
+    href: "https://www.facebook.com/profile.php?id=61574692691300",
     label: "Facebook",
     handle: "Hesham",
     sub: "Find me on Facebook for updates & news",
@@ -176,15 +176,11 @@ const ITEMS: ContactItem[] = [
 const TRUST_ITEMS = [
   {
     icon: <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>,
-    text: "RERA Licensed",
+    text: "Licensed",
   },
   {
     icon: <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>,
     text: "Verified Specialist",
-  },
-  {
-    icon: <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>,
-    text: "Avg. 18 Days to Close",
   },
   {
     icon: <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>,
@@ -330,8 +326,7 @@ export default function Contact() {
                 className="f-sans"
                 style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#94A3B8", lineHeight: 1.72, maxWidth: 420, marginTop: 14, marginBottom: 0 }}
               >
-                No forms, no waiting. Pick the channel that suits you best and
-                reach me directly — I respond to every message personally.
+            No forms, no waiting. Choose the channel that suits you best and reach me directly. I respond to every message personally.
               </p>
             </div>
 
@@ -341,7 +336,7 @@ export default function Contact() {
               style={{ background: "#0D1118", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden" }}
             >
               {[
-                { n: "< 2h",  l: "Avg. Reply Time", c: "#D4AF37" },
+                { n: "< 30m",  l: "Avg. Reply Time", c: "#D4AF37" },
                 { n: "6",     l: "Ways to Reach",   c: "#60A5FA" },
                 { n: "24/7",  l: "WhatsApp",         c: "#25D366" },
               ].map(({ n, l, c }, i) => (
@@ -415,7 +410,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="f-sans" style={{ fontSize: 8, color: "rgba(255,255,255,0.28)", textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 2 }}>Office Hours</p>
-                  <p className="f-sans" style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>Mon – Sat, 9:00 AM – 7:00 PM GST</p>
+                  <p className="f-sans" style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>Mon – Sat, 9:00 AM – 10:00 PM GST</p>
                 </div>
               </div>
 

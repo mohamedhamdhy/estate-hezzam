@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
 const FONTS = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');`;
@@ -69,8 +70,6 @@ function buildSlots(from: Date, to: Date) {
 
 /* ─────────────────────────────────────────────
    DATE RANGE PICKER
-   Fixed-position popup — floats above cards.
-   No entry animation.
 ───────────────────────────────────────────── */
 function DateRangePicker({ from, to, onChange }: {
   from: Date; to: Date; onChange: (f: Date, t: Date) => void;
@@ -116,8 +115,7 @@ function DateRangePicker({ from, to, onChange }: {
         onClick={openPicker}
         className="inline-flex items-center gap-1.5 font-['Outfit'] text-[9px] font-semibold
           tracking-[0.06em] bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5
-          cursor-pointer text-white/50
-          hover:border-[#D4AF37]/30 hover:text-[#D4AF37]
+          cursor-pointer text-white/50 hover:border-[#D4AF37]/30 hover:text-[#D4AF37]
           transition-colors duration-100 whitespace-nowrap"
       >
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
@@ -128,7 +126,6 @@ function DateRangePicker({ from, to, onChange }: {
         {label}
       </button>
 
-      {/* Popup — appears instantly, no animation */}
       {open && (
         <div
           ref={popRef}
@@ -145,8 +142,7 @@ function DateRangePicker({ from, to, onChange }: {
               <input type="month" value={draftFrom}
                 onChange={e => setDraftFrom(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5
-                  text-white/70 font-['Outfit'] text-[11px] outline-none
-                  focus:border-[#D4AF37]/40"
+                  text-white/70 font-['Outfit'] text-[11px] outline-none focus:border-[#D4AF37]/40"
               />
             </div>
             <div>
@@ -154,8 +150,7 @@ function DateRangePicker({ from, to, onChange }: {
               <input type="month" value={draftTo}
                 onChange={e => setDraftTo(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5
-                  text-white/70 font-['Outfit'] text-[11px] outline-none
-                  focus:border-[#D4AF37]/40"
+                  text-white/70 font-['Outfit'] text-[11px] outline-none focus:border-[#D4AF37]/40"
               />
             </div>
           </div>
@@ -177,8 +172,7 @@ function DateRangePicker({ from, to, onChange }: {
           </div>
           <button onClick={apply}
             className="w-full bg-[#D4AF37] text-[#0C0C0F] font-['Outfit'] text-[11px]
-              font-bold py-2 rounded-lg hover:bg-[#F0D060] cursor-pointer
-              transition-colors duration-100"
+              font-bold py-2 rounded-lg hover:bg-[#F0D060] cursor-pointer transition-colors duration-100"
           >
             Apply
           </button>
@@ -189,7 +183,7 @@ function DateRangePicker({ from, to, onChange }: {
 }
 
 /* ─────────────────────────────────────────────
-   KPI CARD — no animations
+   KPI CARD
 ───────────────────────────────────────────── */
 const ACCENT_MAP: Record<string, {
   bar: string; iconBg: string; iconBorder: string; textColor: string;
@@ -213,25 +207,21 @@ function KpiCard({ label, value, sub, accent, icon, change }: {
       <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${a.bar} to-transparent`} />
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <p className={`font-['Outfit'] text-[8px] uppercase tracking-[0.12em]
-            font-semibold mb-1.5 ${a.textColor} opacity-60`}>
+          <p className={`font-['Outfit'] text-[8px] uppercase tracking-[0.12em] font-semibold mb-1.5 ${a.textColor} opacity-60`}>
             {label}
           </p>
-          <p className="font-['Cormorant_Garamond'] text-[clamp(18px,1.8vw,26px)]
-            font-bold text-white leading-none mb-1">
+          <p className="font-['Cormorant_Garamond'] text-[clamp(18px,1.8vw,26px)] font-bold text-white leading-none mb-1">
             {value}
           </p>
           <p className="font-['Outfit'] text-[9px] text-white/25">{sub}</p>
         </div>
-        <div className={`w-9 h-9 rounded-xl ${a.iconBg} border ${a.iconBorder}
-          flex items-center justify-center shrink-0 ${a.textColor}`}>
+        <div className={`w-9 h-9 rounded-xl ${a.iconBg} border ${a.iconBorder} flex items-center justify-center shrink-0 ${a.textColor}`}>
           {icon}
         </div>
       </div>
       {change && (
         <div className="flex items-center gap-1.5 pt-2 border-t border-white/[0.05] mt-auto">
-          <span className={`font-['Outfit'] text-[10px] font-semibold
-            ${change.up ? 'text-[#34D399]' : 'text-[#F87171]'}`}>
+          <span className={`font-['Outfit'] text-[10px] font-semibold ${change.up ? 'text-[#34D399]' : 'text-[#F87171]'}`}>
             {change.up ? '↑' : '↓'} {change.val}
           </span>
           <span className="font-['Outfit'] text-[8px] text-white/20">this month</span>
@@ -242,7 +232,7 @@ function KpiCard({ label, value, sub, accent, icon, change }: {
 }
 
 /* ─────────────────────────────────────────────
-   BAR CHART — no transition on bars
+   BAR CHART
 ───────────────────────────────────────────── */
 function BarChart({ data, color = 'gold' }: {
   data: { label: string; count: number; highlight?: boolean }[];
@@ -251,9 +241,7 @@ function BarChart({ data, color = 'gold' }: {
   const max           = Math.max(...data.map(d => d.count), 1);
   const isBlue        = color === 'blue';
   const baseAlpha     = isBlue ? 'rgba(96,165,250,' : 'rgba(212,175,55,';
-  const highlightGrad = isBlue
-    ? 'linear-gradient(to top,#60A5FA,#93C5FD)'
-    : 'linear-gradient(to top,#D4AF37,#F0D060)';
+  const highlightGrad = isBlue ? 'linear-gradient(to top,#60A5FA,#93C5FD)' : 'linear-gradient(to top,#D4AF37,#F0D060)';
 
   return (
     <div className="flex items-end gap-1 h-full">
@@ -266,10 +254,8 @@ function BarChart({ data, color = 'gold' }: {
                 className="w-full rounded-t-[3px]"
                 style={{
                   height:     `${Math.max(pct, 4)}%`,
-                  background: highlight
-                    ? highlightGrad
-                    : `${baseAlpha}${0.07 + (pct / 100) * 0.3})`,
-                  boxShadow: highlight && !isBlue ? '0 0 8px rgba(212,175,55,0.3)' : 'none',
+                  background: highlight ? highlightGrad : `${baseAlpha}${0.07 + (pct / 100) * 0.3})`,
+                  boxShadow:  highlight && !isBlue ? '0 0 8px rgba(212,175,55,0.3)' : 'none',
                 }}
               />
             </div>
@@ -293,10 +279,7 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
   const range  = max - min || 1;
   const W = 200; const H = 56;
   const step   = W / (points.length - 1);
-  const coords = points.map((v, i) => ({
-    x: i * step,
-    y: H - ((v - min) / range) * (H - 8) - 4,
-  }));
+  const coords = points.map((v, i) => ({ x: i * step, y: H - ((v - min) / range) * (H - 8) - 4 }));
   const path   = coords.map((c, i) => `${i === 0 ? 'M' : 'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
   const area   = `${path} L${W},${H} L0,${H} Z`;
   const gradId = `sg-${color.replace(/[^a-z0-9]/gi, '')}`;
@@ -310,26 +293,25 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
         </linearGradient>
       </defs>
       <path d={area} fill={`url(#${gradId})`} />
-      <path d={path} fill="none" stroke={color} strokeWidth="1.6"
-        strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={coords[coords.length - 1].x} cy={coords[coords.length - 1].y}
-        r="2.5" fill={color} />
+      <path d={path} fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx={coords[coords.length - 1].x} cy={coords[coords.length - 1].y} r="2.5" fill={color} />
     </svg>
   );
 }
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════════
    MAIN PAGE
+════════════════════════════════════════════ */
+export default function AnalyticsPage() {
+  const router = useRouter();
 
-   Auth is fully handled by middleware.ts at:
-     /admin/dashboard/:path* → /admin/auth/login
+  /* ── Auth state ── */
+  const [authChecked, setAuthChecked] = useState(false);
 
-   No client-side redirect logic here.
-   The fetch just reads the session that middleware
-   already validated and returns early silently
-   if somehow no user is present.
-───────────────────────────────────────────── */
-export default function DashboardPage() {
+  /* ── Client-only date values (avoids hydration mismatch) ── */
+  const [now, setNow] = useState<Date | null>(null);
+
+  /* ── Data ── */
   const [profile,    setProfile]    = useState<any>(null);
   const [properties, setProperties] = useState<Property[]>([]);
   const [users,      setUsers]      = useState<User[]>([]);
@@ -339,68 +321,97 @@ export default function DashboardPage() {
   const [revenueFrom,  setRevenueFrom]  = useState<Date>(defaultFrom);
   const [revenueTo,    setRevenueTo]    = useState<Date>(defaultTo);
 
+  /* Set current date on client only */
+  useEffect(() => { setNow(new Date()); }, []);
+
+  /* ── Auth guard ── */
   useEffect(() => {
-    const load = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      // Middleware already redirected unauthenticated users — this is just a safety return
-      if (!user) return;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        router.replace('/auth/login');
+      } else {
+        setAuthChecked(true);
+      }
+    });
 
-      const [{ data: pd }, { data: propD }, { data: usrD }] = await Promise.all([
-        supabase.from('users').select('*').eq('id', user.id).single(),
-        supabase.from('properties').select('*').order('created_at', { ascending: false }),
-        supabase.from('users').select('id,username,email,created_at').order('created_at', { ascending: false }),
-      ]);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) router.replace('/auth/login');
+    });
 
-      if (pd)    setProfile(pd);
-      if (propD) setProperties(propD as Property[]);
-      if (usrD)  setUsers(usrD as User[]);
-    };
-    load();
+    return () => subscription.unsubscribe();
+  }, [router]);
+
+  /* ── Data fetch ── */
+  const fetchData = useCallback(async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const [{ data: pd }, { data: propD }, { data: usrD }] = await Promise.all([
+      supabase.from('users').select('*').eq('id', user.id).single(),
+      supabase.from('properties').select('*').order('created_at', { ascending: false }),
+      supabase.from('users').select('id,username,email,created_at').order('created_at', { ascending: false }),
+    ]);
+
+    if (pd)    setProfile(pd);
+    if (propD) setProperties(propD as Property[]);
+    if (usrD)  setUsers(usrD as User[]);
   }, []);
 
-  /* ── Derived analytics ── */
-  const totalListings  = properties.length;
-  const available      = properties.filter(p => p.status === 'Available').length;
-  const sold           = properties.filter(p => p.status === 'Sold').length;
-  const totalVolume    = properties.reduce((s, p) => s + Number(p.price), 0);
-  const soldVolume     = properties.filter(p => p.status === 'Sold').reduce((s, p) => s + Number(p.price), 0);
-  const avgPrice       = totalListings ? totalVolume / totalListings : 0;
-  const totalUsers     = users.length;
-  const curM           = new Date().getMonth();
-  const curY           = new Date().getFullYear();
-  const thisMonthUsers = users.filter(u => {
-    const d = new Date(u.created_at);
-    return d.getMonth() === curM && d.getFullYear() === curY;
-  }).length;
-  const thisMonthProps = properties.filter(p => {
-    const d = new Date(p.created_at);
-    return d.getMonth() === curM && d.getFullYear() === curY;
-  }).length;
+  useEffect(() => {
+    if (authChecked) fetchData();
+  }, [authChecked, fetchData]);
+
+  /* ── Derived analytics (safe: only uses fetched data, not Date()) ── */
+  const totalListings = properties.length;
+  const available     = properties.filter(p => p.status === 'Available').length;
+  const sold          = properties.filter(p => p.status === 'Sold').length;
+  const totalVolume   = properties.reduce((s, p) => s + Number(p.price), 0);
+  const soldVolume    = properties.filter(p => p.status === 'Sold').reduce((s, p) => s + Number(p.price), 0);
+  const avgPrice      = totalListings ? totalVolume / totalListings : 0;
+  const totalUsers    = users.length;
+
+  /* These depend on current month/year — derive from `now` (client-only) */
+  const curM           = now?.getMonth()    ?? -1;
+  const curY           = now?.getFullYear() ?? -1;
+  const thisMonthUsers = now
+    ? users.filter(u => { const d = new Date(u.created_at); return d.getMonth() === curM && d.getFullYear() === curY; }).length
+    : 0;
+  const thisMonthProps = now
+    ? properties.filter(p => { const d = new Date(p.created_at); return d.getMonth() === curM && d.getFullYear() === curY; }).length
+    : 0;
 
   /* ── Chart data ── */
   const listingSlots    = buildSlots(listingsFrom, listingsTo);
   const monthlyListings = listingSlots.map(s => ({
     label:     s.label,
-    count:     properties.filter(p => {
-      const d = new Date(p.created_at);
-      return d.getMonth() === s.month && d.getFullYear() === s.year;
-    }).length,
-    highlight: s.month === curM && s.year === curY,
+    count:     properties.filter(p => { const d = new Date(p.created_at); return d.getMonth() === s.month && d.getFullYear() === s.year; }).length,
+    highlight: now ? s.month === curM && s.year === curY : false,
   }));
 
   const revenueSlots   = buildSlots(revenueFrom, revenueTo);
   const monthlySoldVol = revenueSlots.map(s =>
     properties
-      .filter(p => {
-        const d = new Date(p.created_at);
-        return p.status === 'Sold' && d.getMonth() === s.month && d.getFullYear() === s.year;
-      })
+      .filter(p => { const d = new Date(p.created_at); return p.status === 'Sold' && d.getMonth() === s.month && d.getFullYear() === s.year; })
       .reduce((a, p) => a + Number(p.price), 0)
   );
 
   const recentUsers = users.slice(0, 5);
 
+  /* ── Block render until session confirmed ── */
+  if (!authChecked) {
+    return (
+      <>
+        <style>{FONTS}</style>
+        <div className="h-full flex items-center justify-center bg-[#080B11]">
+          <p className="font-['Outfit'] text-[12px] text-white/25">Checking session…</p>
+        </div>
+      </>
+    );
+  }
 
+  /* ════════════════════════════════════════════
+     RENDER
+  ════════════════════════════════════════════ */
   return (
     <>
       <style>{FONTS}</style>
@@ -411,79 +422,50 @@ export default function DashboardPage() {
         {/* ══ ROW 1 — KPI CARDS ══ */}
         <div className="flex flex-col gap-2.5 shrink-0 lg:flex-1 lg:min-h-0">
 
+          {/* Greeting */}
+          <div className="shrink-0">
+            <h1 className="font-['Cormorant_Garamond'] text-[clamp(16px,1.8vw,22px)] font-bold text-white leading-tight">
+              Welcome back,{' '}
+              <em className="text-[#D4AF37] not-italic">{profile?.username || 'Admin'}</em>
+            </h1>
+            {/* Render date only after client mount */}
+            {now && (
+              <p className="font-['Outfit'] text-[10px] text-white/25 mt-0.5">
+                {now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            )}
+          </div>
+
           {/* KPI grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5
-            lg:flex-1 lg:min-h-0">
-            <KpiCard label="Total Users" value={String(totalUsers)}
-              sub="Registered accounts" accent="blue"
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 lg:flex-1 lg:min-h-0">
+            <KpiCard label="Total Users" value={String(totalUsers)} sub="Registered accounts" accent="blue"
               change={{ val: `${thisMonthUsers} new`, up: true }}
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M3 20c0-3.314 2.686-6 6-6s6 2.686 6 6"/>
-                  <path d="M16 3.13a4 4 0 010 7.75M21 20c0-3.314-2-5.5-5-6"/>
-                </svg>
-              }
+              icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 20c0-3.314 2.686-6 6-6s6 2.686 6 6"/><path d="M16 3.13a4 4 0 010 7.75M21 20c0-3.314-2-5.5-5-6"/></svg>}
             />
-            <KpiCard label="Total Listings" value={String(totalListings)}
-              sub="All properties" accent="gold"
+            <KpiCard label="Total Listings" value={String(totalListings)} sub="All properties" accent="gold"
               change={{ val: `${thisMonthProps} new`, up: true }}
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-                  <path d="M9 21V12h6v9"/>
-                </svg>
-              }
+              icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>}
             />
-            <KpiCard label="Portfolio Value" value={fmtPrice(totalVolume)}
-              sub={`${fmtPrice(avgPrice)} avg`} accent="purple"
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2"/>
-                  <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-                </svg>
-              }
+            <KpiCard label="Portfolio Value" value={fmtPrice(totalVolume)} sub={`${fmtPrice(avgPrice)} avg`} accent="purple"
+              icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>}
             />
-            <KpiCard label="Available" value={String(available)}
-              sub="Ready to transact" accent="green"
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="9"/>
-                  <path d="M8 12l3 3 5-5"/>
-                </svg>
-              }
+            <KpiCard label="Available" value={String(available)} sub="Ready to transact" accent="green"
+              icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-5"/></svg>}
             />
-            <KpiCard label="Sold" value={String(sold)}
-              sub={`${fmtPrice(soldVolume)} closed`} accent="teal"
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                  <polyline points="17 6 23 6 23 12"/>
-                </svg>
-              }
+            <KpiCard label="Sold" value={String(sold)} sub={`${fmtPrice(soldVolume)} closed`} accent="teal"
+              icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>}
             />
           </div>
         </div>
 
         {/* ══ ROW 2 — CHARTS + USERS ══ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5
-          min-h-[560px] lg:flex-1 lg:min-h-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 min-h-[560px] lg:flex-1 lg:min-h-0">
 
           {/* Monthly Activity */}
-          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col
-            overflow-visible hover:border-white/[0.12] transition-colors duration-100">
-            <div className="flex items-center justify-between gap-2 px-4 py-3
-              border-b border-white/[0.06] shrink-0 flex-wrap">
+          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col overflow-visible hover:border-white/[0.12] transition-colors duration-100">
+            <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-white/[0.06] shrink-0 flex-wrap">
               <div>
-                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase
-                  tracking-[0.12em] font-semibold mb-0.5">
-                  Monthly Activity
-                </p>
+                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase tracking-[0.12em] font-semibold mb-0.5">Monthly Activity</p>
                 <p className="font-['Cormorant_Garamond'] text-[15px] font-bold text-white leading-none">
                   New Listings <em className="text-[#D4AF37] not-italic">Trend</em>
                 </p>
@@ -497,23 +479,14 @@ export default function DashboardPage() {
               </div>
               <div className="flex justify-between pt-2.5 border-t border-white/[0.05] shrink-0">
                 <div>
-                  <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">
-                    Peak Month
-                  </p>
-                  <p className="font-['Cormorant_Garamond'] text-[16px] font-bold
-                    text-[#D4AF37] leading-none mt-0.5">
-                    {monthlyListings.reduce(
-                      (a, b) => b.count > a.count ? b : a,
-                      { label: '—', count: 0 }
-                    ).label}
+                  <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">Peak Month</p>
+                  <p className="font-['Cormorant_Garamond'] text-[16px] font-bold text-[#D4AF37] leading-none mt-0.5">
+                    {monthlyListings.reduce((a, b) => b.count > a.count ? b : a, { label: '—', count: 0 }).label}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">
-                    Range Total
-                  </p>
-                  <p className="font-['Cormorant_Garamond'] text-[16px] font-bold
-                    text-white leading-none mt-0.5">
+                  <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">Range Total</p>
+                  <p className="font-['Cormorant_Garamond'] text-[16px] font-bold text-white leading-none mt-0.5">
                     {monthlyListings.reduce((s, m) => s + m.count, 0)} Listed
                   </p>
                 </div>
@@ -522,15 +495,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Revenue */}
-          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col
-            overflow-visible hover:border-white/[0.12] transition-colors duration-100">
-            <div className="flex items-center justify-between gap-2 px-4 py-3
-              border-b border-white/[0.06] shrink-0 flex-wrap">
+          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col overflow-visible hover:border-white/[0.12] transition-colors duration-100">
+            <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-white/[0.06] shrink-0 flex-wrap">
               <div>
-                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase
-                  tracking-[0.12em] font-semibold mb-0.5">
-                  Revenue
-                </p>
+                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase tracking-[0.12em] font-semibold mb-0.5">Revenue</p>
                 <p className="font-['Cormorant_Garamond'] text-[15px] font-bold text-white leading-none">
                   Sales <em className="text-[#D4AF37] not-italic">Growth</em>
                 </p>
@@ -540,16 +508,11 @@ export default function DashboardPage() {
             </div>
             <div className="flex-1 min-h-0 p-4 flex flex-col gap-2">
               <div className="shrink-0">
-                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">
-                  Sold in Range
-                </p>
-                <p className="font-['Cormorant_Garamond'] text-[22px] font-bold
-                  text-[#D4AF37] leading-none mt-1">
+                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">Sold in Range</p>
+                <p className="font-['Cormorant_Garamond'] text-[22px] font-bold text-[#D4AF37] leading-none mt-1">
                   {fmtPrice(monthlySoldVol.reduce((a, v) => a + v, 0))}
                 </p>
-                <p className="font-['Outfit'] text-[9px] text-white/25 mt-0.5">
-                  {sold} transactions closed
-                </p>
+                <p className="font-['Outfit'] text-[9px] text-white/25 mt-0.5">{sold} transactions closed</p>
               </div>
               <div className="flex-1 min-h-0">
                 <Sparkline points={monthlySoldVol} color="#D4AF37" />
@@ -558,8 +521,7 @@ export default function DashboardPage() {
                 {revenueSlots
                   .filter((_, i) => i % Math.max(1, Math.floor(revenueSlots.length / 5)) === 0)
                   .map(s => (
-                    <span key={`${s.label}-${s.year}`}
-                      className="font-['Outfit'] text-[7px] text-white/20">
+                    <span key={`${s.label}-${s.year}`} className="font-['Outfit'] text-[7px] text-white/20">
                       {s.label}
                     </span>
                   ))}
@@ -568,21 +530,15 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Users */}
-          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col
-            overflow-hidden hover:border-white/[0.12] transition-colors duration-100">
-            <div className="flex items-center justify-between gap-2 px-4 py-3
-              border-b border-white/[0.06] shrink-0">
+          <div className="bg-[#0D1118] border border-white/[0.08] rounded-2xl flex flex-col overflow-hidden hover:border-white/[0.12] transition-colors duration-100">
+            <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-white/[0.06] shrink-0">
               <div>
-                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase
-                  tracking-[0.12em] font-semibold mb-0.5">
-                  Accounts
-                </p>
+                <p className="font-['Outfit'] text-[8px] text-white/25 uppercase tracking-[0.12em] font-semibold mb-0.5">Accounts</p>
                 <p className="font-['Cormorant_Garamond'] text-[15px] font-bold text-white leading-none">
                   Recent <em className="text-[#60A5FA] not-italic">Users</em>
                 </p>
               </div>
-              <span className="font-['Outfit'] text-[9px] font-bold text-[#60A5FA]
-                bg-[#60A5FA]/10 border border-[#60A5FA]/20 rounded-lg px-2.5 py-1">
+              <span className="font-['Outfit'] text-[9px] font-bold text-[#60A5FA] bg-[#60A5FA]/10 border border-[#60A5FA]/20 rounded-lg px-2.5 py-1">
                 {totalUsers} Total
               </span>
             </div>
@@ -595,59 +551,33 @@ export default function DashboardPage() {
               ) : recentUsers.map(u => {
                 const ui = (u.username || u.email || 'U').slice(0, 2).toUpperCase();
                 return (
-                  <div key={u.id}
-                    className="flex items-center gap-2.5 px-4 py-2.5
-                      border-b border-white/[0.04] last:border-0">
-                    <div className="w-9 h-9 rounded-full
-                      bg-gradient-to-br from-[#60A5FA]/15 to-[#1A6E8E]/15
-                      border border-[#60A5FA]/20
-                      flex items-center justify-center shrink-0">
-                      <span className="font-['Cormorant_Garamond'] text-[12px] font-bold text-[#60A5FA]">
-                        {ui}
-                      </span>
+                  <div key={u.id} className="flex items-center gap-2.5 px-4 py-2.5 border-b border-white/[0.04] last:border-0">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#60A5FA]/15 to-[#1A6E8E]/15 border border-[#60A5FA]/20 flex items-center justify-center shrink-0">
+                      <span className="font-['Cormorant_Garamond'] text-[12px] font-bold text-[#60A5FA]">{ui}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-['Outfit'] text-[12px] font-semibold text-white/75 truncate">
-                        {u.username || '—'}
-                      </p>
-                      <p className="font-['Outfit'] text-[9px] text-white/25 truncate">
-                        {u.email}
-                      </p>
+                      <p className="font-['Outfit'] text-[12px] font-semibold text-white/75 truncate">{u.username || '—'}</p>
+                      <p className="font-['Outfit'] text-[9px] text-white/25 truncate">{u.email}</p>
                     </div>
-                    <p className="font-['Outfit'] text-[9px] text-white/20 shrink-0">
-                      {timeAgo(u.created_at)}
-                    </p>
+                    <p className="font-['Outfit'] text-[9px] text-white/20 shrink-0">{timeAgo(u.created_at)}</p>
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex items-center justify-between px-4 py-3
-              border-t border-white/[0.06] shrink-0">
+            <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06] shrink-0">
               <div>
-                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">
-                  This Month
-                </p>
-                <p className="font-['Cormorant_Garamond'] text-[18px] font-bold
-                  text-[#60A5FA] leading-none mt-0.5">
-                  {thisMonthUsers}
-                </p>
+                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">This Month</p>
+                <p className="font-['Cormorant_Garamond'] text-[18px] font-bold text-[#60A5FA] leading-none mt-0.5">{thisMonthUsers}</p>
               </div>
               <div className="text-right">
-                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">
-                  Total
-                </p>
-                <p className="font-['Cormorant_Garamond'] text-[18px] font-bold
-                  text-white leading-none mt-0.5">
-                  {totalUsers}
-                </p>
+                <p className="font-['Outfit'] text-[8px] text-white/20 uppercase tracking-[0.1em]">Total</p>
+                <p className="font-['Cormorant_Garamond'] text-[18px] font-bold text-white leading-none mt-0.5">{totalUsers}</p>
               </div>
             </div>
           </div>
 
         </div>
-        {/* end row 2 */}
-
       </div>
     </>
   );

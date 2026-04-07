@@ -11,10 +11,7 @@ const G = `
     0%, 100% { opacity: 1; transform: scale(1); }
     50%       { opacity: 0.4; transform: scale(1.4); }
   }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+
   @keyframes imgZoom {
     from { transform: scale(1); }
     to   { transform: scale(1.07); }
@@ -26,7 +23,6 @@ const G = `
     border-radius: 18px;
     overflow: hidden;
     transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.35s, border-color 0.35s;
-    animation: fadeUp 0.55s ease both;
   }
   .prop-card:hover {
     transform: translateY(-7px);
@@ -127,81 +123,59 @@ interface Property {
   price: string;
   description: string;
   metrics: [Metric, Metric, Metric];
-  delay: number;
 }
 
 const PROPERTIES: Property[] = [
   {
-    image:
-      'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=85',
-    alt: 'Palm Jumeirah luxury villa',
-    badge: 'Exclusive',
-    badgeVariant: 'exclusive',
-    roi: 'ROI 9.2%',
-    name: 'Palm Signature Villa',
-    location: 'Palm Jumeirah, Dubai',
-    price: 'AED 9,200,000',
-    description:
-      'A palatial waterfront estate with 6 bedrooms, private beach, and infinity pool. Trophy asset delivering exceptional rental demand and above-market yields year-round.',
-    metrics: [
-      {
-        label: 'Annual ROI',
-        value: '9.2%',
-        sub: '↑ above avg',
-        color: 'green',
-      },
-      { label: 'Cap Rate', value: '6.8%', sub: 'Net yield', color: 'gold' },
-      { label: 'Apprec.', value: '+24%', sub: 'Since 2023', color: 'blue' },
-    ],
-    delay: 0,
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=85',
-    alt: 'Downtown Dubai penthouse view',
+    image: 'https://www.valley-dubai-sales.com/wp-content/uploads/2025/11/emaar-valo-dubai-creek.jpg',
+    alt: 'Dubai Creek Harbour waterfront apartment',
     badge: 'Available',
     badgeVariant: 'available',
-    roi: 'ROI 10.4%',
-    name: 'Burj View Sky Penthouse',
-    location: 'Downtown Dubai, UAE',
-    price: 'AED 5,100,000',
+    roi: 'ROI 6.2%',
+    name: 'Creek Harbour 3-BR Apartment',
+    location: 'Dubai Creek Harbour, Dubai, UAE',
+    price: 'AED 3,500,000',
     description:
-      'Sky-high duplex penthouse with floor-to-ceiling glass and direct Burj Khalifa views. Fully furnished with concierge services and premium short-term rental income potential.',
+      'Spacious 3-bedroom apartment with waterfront and Burj views. Access to promenade, marina, and luxury amenities. Strong tenant demand ensures consistent rental income.',
     metrics: [
-      {
-        label: 'Annual ROI',
-        value: '10.4%',
-        sub: '↑ above avg',
-        color: 'green',
-      },
-      { label: 'Cap Rate', value: '8.1%', sub: 'Net yield', color: 'gold' },
-      { label: 'Apprec.', value: '+31%', sub: 'Since 2023', color: 'blue' },
+      { label: 'Annual ROI', value: '6.2%', sub: '↑ above avg', color: 'green' },
+      { label: 'Cap Rate', value: '5.5%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+22%', sub: 'Since 2023', color: 'blue' },
     ],
-    delay: 110,
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=85',
+    image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-1611294216327668285/original/e5b67a23-a70a-4f8c-b359-06e411a6b593.jpeg?im_w=1920',
     alt: 'Dubai Marina apartment skyline',
     badge: 'Off-Plan',
     badgeVariant: 'offplan',
-    roi: 'ROI 8.4%',
-    name: 'Marina Skyline Residences',
-    location: 'Dubai Marina, UAE',
-    price: 'AED 3,100,000',
+    roi: 'ROI 6.8%',
+    name: 'Marina Skyline 2-BR Apartment',
+    location: 'Dubai Marina, Dubai, UAE',
+    price: 'AED 4,140,000',
     description:
-      'Sleek 3-bedroom Emaar-developed apartment with panoramic marina and sea views. World-class amenities and consistently high occupancy from expat professionals and tourists.',
+      'Modern 2-bedroom apartment with panoramic marina views. High occupancy rates for expats and tourists, fully integrated amenities, and easy access to Marina Walk.',
     metrics: [
-      {
-        label: 'Annual ROI',
-        value: '8.4%',
-        sub: '↑ above avg',
-        color: 'green',
-      },
-      { label: 'Cap Rate', value: '6.2%', sub: 'Net yield', color: 'gold' },
-      { label: 'Apprec.', value: '+19%', sub: 'Since 2023', color: 'blue' },
+      { label: 'Annual ROI', value: '6.8%', sub: '↑ above avg', color: 'green' },
+      { label: 'Cap Rate', value: '6.0%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+18%', sub: 'Since 2023', color: 'blue' },
     ],
-    delay: 220,
+  },
+  {
+    image:   'https://solproperties.ae/wp-content/uploads/2024/08/Living_Dining_V1-HD.webp',
+    alt: 'Downtown Dubai luxury apartment',
+    badge: 'Available',
+    badgeVariant: 'available',
+    roi: 'ROI 5.5%',
+    name: 'Downtown Dubai Luxury Apartment',
+    location: 'Downtown Dubai, UAE',
+    price: 'AED 5,000,000',
+    description:
+      'Premium high-floor apartment with Burj Khalifa and skyline views. Central location ensures strong long-term capital appreciation and consistent rental demand.',
+    metrics: [
+      { label: 'Annual ROI', value: '5.5%', sub: '↑ avg', color: 'green' },
+      { label: 'Cap Rate', value: '4.8%', sub: 'Net yield', color: 'gold' },
+      { label: 'Apprec.', value: '+30%', sub: 'Since 2023', color: 'blue' },
+    ],
   },
 ];
 
@@ -217,18 +191,10 @@ const TRUST_ITEMS = [
   {
     icon: (
       <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37">
-        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />
-      </svg>
-    ),
-    text: 'Avg. 18 Days to Close',
-  },
-  {
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
       </svg>
     ),
-    text: 'RERA Licensed',
+    text: 'Licensed',
   },
   {
     icon: (
@@ -382,11 +348,10 @@ function PropertyCard({ property }: { property: Property }) {
     price,
     description,
     metrics,
-    delay,
-  } = property;
+    } = property;
 
   return (
-    <div className="prop-card" style={{ animationDelay: `${delay}ms` }}>
+    <div className="prop-card">
       <div style={{ position: 'relative', height: 210, overflow: 'hidden' }}>
         <img className="card-img-inner" src={image} alt={alt} />
         <div
@@ -588,9 +553,7 @@ export default function Properties() {
                   marginBottom: 0,
                 }}
               >
-                Hand-picked residences across Dubai's most coveted addresses —
-                each selected for maximum capital appreciation and above-market
-                rental yield potential.
+              Curated residences across Dubai’s top addresses, chosen for strong capital growth and high rental returns.
               </p>
             </div>
 
@@ -632,7 +595,7 @@ export default function Properties() {
                 />
               </svg>
             </Link>
-            <Link href="#contact" className="btn-ghost">
+            <Link href="/properties" className="btn-ghost">
               Book a Private Viewing ↗
             </Link>
           </div>
