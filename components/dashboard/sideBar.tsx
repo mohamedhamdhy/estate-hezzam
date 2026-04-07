@@ -22,14 +22,14 @@ export default function Sidebar({ profile, onClose }: Props) {
   const initials = (profile?.username || profile?.email || 'AD').slice(0, 2).toUpperCase();
 
   const NAV: NavItem[] = [
-    { label: 'Analytics', href: '/admin/dashboard', icon: <FiBarChart2 size={22} /> },
-    { label: 'Properties', href: '/admin/dashboard/properties', icon: <FiHome size={22} /> },
-    { label: 'Users', href: '/admin/dashboard/users', icon: <FiUsers size={22} /> },
+    { label: 'Analytics', href: '/dashboard', icon: <FiBarChart2 size={22} /> },
+    { label: 'Properties', href: '/dashboard/properties', icon: <FiHome size={22} /> },
+    { label: 'Users', href: '/dashboard/users', icon: <FiUsers size={22} /> },
   ];
 
   async function handleLogout() {
     await supabase.auth.signOut();
-    router.push('/admin/auth/login');
+    router.push('/auth/login');
   }
 
   return (

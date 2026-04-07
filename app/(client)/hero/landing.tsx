@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const G = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -68,6 +68,7 @@ function MiniBar({ h, active }: { h: number; active?: boolean }) {
 }
 
 export default function Landing() {
+  const router = useRouter();
   const bars = [
     { h: 32 },
     { h: 48 },
@@ -152,9 +153,7 @@ export default function Landing() {
                 fontWeight: 400,
               }}
             >
-              Curated luxury real estate across the UAE’s most prestigious
-              destinations — from Palm Jumeirah villas to Downtown Dubai
-              penthouses and beyond.
+              Curated luxury real estate across the UAE’s most prestigious destinations, from Palm Jumeirah villas to Downtown Dubai penthouses and beyond.
             </p>
 
             <div className="flex flex-wrap gap-1.5 mb-4 lg:mb-3">
@@ -210,7 +209,7 @@ export default function Landing() {
                   color: 'rgba(255,255,255,0.25)',
                 }}
               >
-                Trusted Since 2012
+                Trusted Since 2025
               </span>
               <div
                 className="h-px flex-1"
@@ -255,9 +254,9 @@ export default function Landing() {
                 }
               />
               <ContactLink
-                href="mailto:hesham@gmail.com"
+                href="mailto:heshamestate@gmail.com"
                 line1="Email"
-                line2="hesham@gmail.com"
+                line2="heshamestate@gmail.com"
                 icon={
                   <svg
                     width="12"
@@ -277,50 +276,42 @@ export default function Landing() {
             </div>
 
             <div className="flex items-center gap-3 flex-wrap mb-4 lg:mb-3">
-              <Link
-                href="#listings"
-                className="f-sans inline-flex items-center gap-2 transition-all duration-150 hover:-translate-y-0.5 no-underline"
-                style={{
-                  background: '#D4AF37',
-                  color: '#0C0C0F',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  padding: '11px 24px',
-                  borderRadius: 10,
-                  boxShadow: '0 0 24px rgba(212,175,55,0.35)',
-                  letterSpacing: '0.01em',
-                }}
-              >
-                View Listings <span style={{ fontSize: 14 }}>→</span>
-              </Link>
-              <Link
-                href="#contact"
-                className="f-sans inline-flex items-center gap-2 transition-all duration-150 no-underline"
-                style={{
-                  background: 'transparent',
-                  color: '#E2E8F0',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  padding: '10px 22px',
-                  borderRadius: 10,
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  letterSpacing: '0.01em',
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    'rgba(212,175,55,0.5)';
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    '#D4AF37';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    'rgba(255,255,255,0.15)';
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    '#E2E8F0';
-                }}
-              >
-                Book Consultation <span style={{ fontSize: 13 }}>↗</span>
-              </Link>
+          <button
+      onClick={() => router.push('/properties')}
+      className="f-sans inline-flex items-center gap-2 transition-all duration-150 hover:-translate-y-0.5"
+      style={{
+        background: '#D4AF37',
+        color: '#0C0C0F',
+        fontSize: 13,
+        fontWeight: 700,
+        padding: '11px 24px',
+        borderRadius: 10,
+        boxShadow: '0 0 24px rgba(212,175,55,0.35)',
+        letterSpacing: '0.01em',
+        border: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      View Listings <span style={{ fontSize: 14 }}>→</span>
+    </button>
+         <button
+  onClick={() => {
+    const el = document.getElementById("contact");
+    el?.scrollIntoView({ behavior: "smooth" });
+  }}
+  className="btn-gold inline-flex items-center gap-2"
+>
+  Work With Me
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path
+      d="M2.5 7H11.5M7.5 3L11.5 7L7.5 11"
+      stroke="#0C0C0F"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+</button>
             </div>
           </div>
 
@@ -482,7 +473,7 @@ export default function Landing() {
                         fontFamily: 'monospace',
                       }}
                     >
-                      hesham.com/listings
+                      hesham.com/properties
                     </span>
                   </div>
                 </div>

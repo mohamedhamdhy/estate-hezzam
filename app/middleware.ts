@@ -28,18 +28,18 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith("/admin/dashboard")) {
+  if (pathname.startsWith("/dashboard")) {
     if (!session) {
       const loginUrl = req.nextUrl.clone();
-      loginUrl.pathname = "/admin/auth/login";
+      loginUrl.pathname = "/auth/login";
       loginUrl.searchParams.set("redirectTo", pathname);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  if (pathname === "/admin/auth/login" && session) {
+  if (pathname === "/auth/login" && session) {
     const dashUrl = req.nextUrl.clone();
-    dashUrl.pathname = "/admin/dashboard";
+    dashUrl.pathname = "/dashboard";
     return NextResponse.redirect(dashUrl);
   }
 
@@ -47,5 +47,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/dashboard/:path*", "/admin/auth/login"],
+  matcher: ["/dashboard/:path*", "/auth/login"],
 };

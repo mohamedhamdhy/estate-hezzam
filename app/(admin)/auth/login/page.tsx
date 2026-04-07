@@ -282,7 +282,7 @@ export default function Login() {
         else localStorage.removeItem('adm_email');
         void data;
         setTimeout(() => {
-          window.location.href = '/admin/dashboard';
+          window.location.href = '/dashboard';
         }, 1400);
       }
     } catch {
@@ -773,7 +773,7 @@ export default function Login() {
               </label>
 
              <Link
-  href="/admin/auth/forgot-password"
+  href="/auth/forgot-password"
   className="f-sans"
   style={{
     fontSize: 11,

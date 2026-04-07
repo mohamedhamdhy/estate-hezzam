@@ -158,7 +158,7 @@ export default function ForgotPassword() {
       const { error } = await supabase.auth.resetPasswordForEmail(
         sanitize(email.trim()),
         {
-          redirectTo: `${window.location.origin}/admin/auth/reset-password`,
+          redirectTo: `${window.location.origin}/auth/reset-password`,
         },
       );
 
@@ -267,7 +267,7 @@ export default function ForgotPassword() {
           <div style={{ padding: '32px 32px 28px' }}>
             <div style={{ marginBottom: 20 }}>
               <Link
-                href="/admin/auth/login"
+                href="/auth/login"
                 className="f-sans"
                 style={{
                   display: 'inline-flex',

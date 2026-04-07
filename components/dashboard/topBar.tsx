@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { FiMenu } from 'react-icons/fi';
 
 interface Props {
@@ -8,6 +9,16 @@ interface Props {
 }
 
 export default function Topbar({ title, onMenuClick }: Props) {
+  const [dateLabel, setDateLabel] = useState<string | null>(null);
+
+  useEffect(() => {
+    setDateLabel(
+      new Date().toLocaleDateString('en-US', {
+        day: 'numeric', month: 'short', year: 'numeric',
+      })
+    );
+  }, []);
+
   return (
     <header className="h-13 md:h-15 shrink-0 bg-[#080B11] border-b border-white/6
       flex items-center px-4 md:px-6 gap-3">
@@ -34,11 +45,11 @@ export default function Topbar({ title, onMenuClick }: Props) {
             Live
           </span>
         </div>
-        <p className="font-['Outfit'] text-[10px] md:text-[11px] text-white/25 hidden sm:block">
-          {new Date().toLocaleDateString('en-US', {
-            day: 'numeric', month: 'short', year: 'numeric',
-          })}
-        </p>
+        {dateLabel && (
+          <p className="font-['Outfit'] text-[10px] md:text-[11px] text-white/25 hidden sm:block">
+            {dateLabel}
+          </p>
+        )}
       </div>
     </header>
   );
